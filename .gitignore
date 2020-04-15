@@ -1,0 +1,6 @@
+# Arquivo binario
+go-message-receive
+
+# Vendor
+vendor/
+.vendor-new/
