@@ -20,10 +20,10 @@ func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) 
 	endpoint := variaveis.ApiURL + "/" + api + "/mensagem/" + id
 
 	resposta, err := utils.GetRequest(endpoint)
-	defer resposta.Body.Close()
 	if err != nil {
 		return mensagemRetorno, err
 	}
+	defer resposta.Body.Close()
 	if resposta.StatusCode == http.StatusOK {
 		corpo, err := ioutil.ReadAll(resposta.Body)
 		if err != nil {
@@ -46,11 +46,11 @@ func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) 
 func AtualizarMensagem(novaMensagem models.Mensagem) (mensagemRetorno models.Mensagem, erro error) {
 	endpoint := variaveis.ApiURL + "/" + api + "/mensagem/atualizar"
 
-	resposta, err := utils.PostRequest(endpoint, novaMensagem)
-	defer resposta.Body.Close()
+	resposta, err := utils.PutRequest(endpoint, novaMensagem)
 	if err != nil {
 		return mensagemRetorno, err
 	}
+	defer resposta.Body.Close()
 	if resposta.StatusCode == http.StatusOK {
 		corpo, err := ioutil.ReadAll(resposta.Body)
 		if err != nil {

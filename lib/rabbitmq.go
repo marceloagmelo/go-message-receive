@@ -62,13 +62,15 @@ func LerMensagensRabbitMQ(conn *amqp.Connection) {
 	go func() {
 		for d := range msgs {
 			strID := utils.BytesToString(d.Body)
-			mensagem, _ := api.RecuperarMensagem(strID)
-			mensagem.Status = 2
-			novaMensagem, _ := api.AtualizarMensagem(mensagem)
-
-			msg := fmt.Sprintf("Processou a mensagem: %v", novaMensagem.ID)
-			logger.Info.Println(msg)
-
+			mensagemRecuperada, err := api.RecuperarMensagem(strID)
+			if err == nil {
+				mensagemRecuperada.Status = 2
+				novaMensagem, err := api.AtualizarMensagem(mensagemRecuperada)
+				if err == nil {
+					msg := fmt.Sprintf("Processou a mensagem: %v", novaMensagem.ID)
+					logger.Info.Println(msg)
+				}
+			}
 		}
 	}()
 

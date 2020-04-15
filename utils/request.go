@@ -74,3 +74,38 @@ func PostRequest(endpoint string, mensagem models.Mensagem) (*http.Response, err
 	}
 	return resposta, nil
 }
+
+// PutRequest envio de uma requisição
+func PutRequest(endpoint string, mensagem models.Mensagem) (*http.Response, error) {
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	defer tr.CloseIdleConnections()
+
+	cliente := &http.Client{
+		Transport: tr,
+		Timeout:   time.Second * 30,
+	}
+
+	conteudoEnviar, err := json.Marshal(&mensagem)
+	if err != nil {
+		mensagem := fmt.Sprintf("%s: %s", "Erro ao gerar o objeto com o JSON lido", err.Error())
+		logger.Erro.Println(mensagem)
+		return nil, err
+	}
+
+	request, err := http.NewRequest("PUT", endpoint, bytes.NewBuffer(conteudoEnviar))
+	if err != nil {
+		mensagem := fmt.Sprintf("%s: %s", "Erro ao criar o request com a mensagem", err.Error())
+		logger.Erro.Println(mensagem)
+		return nil, err
+	}
+
+	resposta, err := cliente.Do(request)
+	if err != nil {
+		mensagem := fmt.Sprintf("%s: %s", "Erro ao executar o post da mensagem", err.Error())
+		logger.Erro.Println(mensagem)
+		return nil, err
+	}
+	return resposta, nil
+}

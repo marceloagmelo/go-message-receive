@@ -98,6 +98,10 @@
                                         "value": "America/Sao_Paulo"
                                     },
                                     {
+                                        "name": "API_SERVICE_URL",
+                                        "value": "${API_SERVICE_URL}"
+                                    },
+                                    {
                                         "name": "RABBITMQ_HOSTNAME",
                                         "value": "${RABBITMQ_HOSTNAME}"
                                     },
@@ -198,6 +202,13 @@
             "description": "Nome da aplicação",
             "required": true,
             "value": "go-message-receive"
+        },
+        {
+            "name": "API_SERVICE_URL",
+            "displayName": "Nome do serviço de mensagem",
+            "description": "Nome do serviço de mensagem",
+            "value": "http://go-message-api:8080",
+            "required": true
         },
         {
             "displayName": "Nome do serviço do rabbitmq",
