@@ -141,6 +141,22 @@
                                         "protocol": "TCP"
                                     }
                                 ],
+                                "readinessProbe": {
+                                  "timeoutSeconds": 1,
+                                  "initialDelaySeconds": 15,
+                                  "httpGet": {
+                                    "path": "/health",
+                                    "port": 8080
+                                  }
+                                },
+                                "livenessProbe": {
+                                  "timeoutSeconds": 1,
+                                  "initialDelaySeconds": 15,
+                                  "httpGet": {
+                                    "path": "/health",
+                                    "port": 8080
+                                  }
+                                },
                                 "resources": {
                                     "limits": {
                                         "cpu": 1,

@@ -2,6 +2,7 @@ package lib
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/marceloagmelo/go-message-receive/api"
@@ -76,6 +77,8 @@ func LerMensagensRabbitMQ(conn *amqp.Connection) {
 
 	mensagem := fmt.Sprintf(" [*] Esperando mensagens da fila: %s", fila)
 	logger.Info.Println(mensagem)
+
+	http.ListenAndServe(":8080", nil)
 
 	<-forever
 }
