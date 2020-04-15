@@ -2,12 +2,12 @@ package lib
 
 import (
 	"fmt"
-	"log"
 	"os"
+
+	"github.com/marceloagmelo/go-message-receive/api"
 
 	"github.com/marceloagmelo/go-message-receive/logger"
 	"github.com/marceloagmelo/go-message-receive/utils"
-	"github.com/marceloagmelo/go-rabbitmq-receive/models"
 	"github.com/streadway/amqp"
 )
 
@@ -20,12 +20,7 @@ func ConectarRabbitMQ() (*amqp.Connection, error) {
 	// Conectar com o rabbitmq
 	var connectionString = fmt.Sprintf("amqp://%s:%s@%s:%s%s", os.Getenv("RABBITMQ_USER"), os.Getenv("RABBITMQ_PASS"), os.Getenv("RABBITMQ_HOSTNAME"), os.Getenv("RABBITMQ_PORT"), os.Getenv("RABBITMQ_VHOST"))
 	conn, err := amqp.Dial(connectionString)
-	if err != nil {
-		mensagem := fmt.Sprintf("%s: %s", "Conectando com o rabbitmq", err)
-		logger.Erro.Println(mensagem)
-
-		return nil, err
-	}
+	utils.CheckErrFatal(err, "Conectando com o rabbitmq")
 
 	return conn, nil
 }
@@ -66,10 +61,14 @@ func LerMensagensRabbitMQ(conn *amqp.Connection) {
 
 	go func() {
 		for d := range msgs {
-			log.Printf("Processou a mensagem: %s", d.Body)
 			strID := utils.BytesToString(d.Body)
-			msg := models.AtualizarMensagem(strID)
-			log.Println(msg)
+			mensagem, _ := api.RecuperarMensagem(strID)
+			mensagem.Status = 2
+			novaMensagem, _ := api.AtualizarMensagem(mensagem)
+
+			msg := fmt.Sprintf("Processou a mensagem: %v", novaMensagem.ID)
+			logger.Info.Println(msg)
+
 		}
 	}()
 

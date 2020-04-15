@@ -1,6 +1,7 @@
 package variaveis
 
 import (
+	"os"
 	"time"
 )
 
@@ -21,3 +22,6 @@ var DataFormatArquivo = "20060102-150405"
 
 //DataHoraAtual a data e hora tual
 var DataHoraAtual = time.Now()
+
+//ApiURL URL
+var ApiURL = os.Getenv("API_SERVICE_URL")

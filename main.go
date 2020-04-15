@@ -9,7 +9,7 @@ const (
 )
 
 func main() {
-	conn := lib.ConectarRabbitMQ()
+	conn, _ := lib.ConectarRabbitMQ()
 	defer conn.Close()
 
 	lib.LerMensagensRabbitMQ(conn)
