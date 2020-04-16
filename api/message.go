@@ -6,8 +6,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/marceloagmelo/go-message-receive/utils"
-
 	"github.com/marceloagmelo/go-message-receive/logger"
 	"github.com/marceloagmelo/go-message-receive/models"
 	"github.com/marceloagmelo/go-message-receive/variaveis"
@@ -19,7 +17,7 @@ var api = "go-message/api/v1"
 func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) {
 	endpoint := variaveis.ApiURL + "/" + api + "/mensagem/" + id
 
-	resposta, err := utils.GetRequest(endpoint)
+	resposta, err := GetRequest(endpoint)
 	if err != nil {
 		return mensagemRetorno, err
 	}
@@ -46,7 +44,7 @@ func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) 
 func AtualizarMensagem(novaMensagem models.Mensagem) (mensagemRetorno models.Mensagem, erro error) {
 	endpoint := variaveis.ApiURL + "/" + api + "/mensagem/atualizar"
 
-	resposta, err := utils.PutRequest(endpoint, novaMensagem)
+	resposta, err := PutRequest(endpoint, novaMensagem)
 	if err != nil {
 		return mensagemRetorno, err
 	}

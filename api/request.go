@@ -1,4 +1,4 @@
-package utils
+package api
 
 import (
 	"bytes"
@@ -103,7 +103,7 @@ func PutRequest(endpoint string, mensagem models.Mensagem) (*http.Response, erro
 
 	resposta, err := cliente.Do(request)
 	if err != nil {
-		mensagem := fmt.Sprintf("%s: %s", "Erro ao executar o post da mensagem", err.Error())
+		mensagem := fmt.Sprintf("%s: %s", "Erro ao executar o put da mensagem", err.Error())
 		logger.Erro.Println(mensagem)
 		return nil, err
 	}
