@@ -9,7 +9,7 @@ Aplicação que esperando uma mensagem ser enviada para o **RabbitMQ**, esta apl
 # Instalação
 
 ```
-cd go-message-receive
+go get -v github.com/marceloagmelo/go-message-receive
 ```
 ```
 cd go-message-receive
