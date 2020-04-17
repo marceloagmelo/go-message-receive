@@ -8,8 +8,12 @@ Aplicação que esperando uma mensagem ser enviada para o **RabbitMQ**, esta apl
 
 # Instalação
 
-go get -v github.com/marceloagmelo/go-message-receive
+```
 cd go-message-receive
+```
+```
+cd go-message-receive
+```
 
 ## Build da Aplicação
 
