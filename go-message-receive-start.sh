@@ -11,6 +11,7 @@ docker run -d --name go-message-receive --network $DOCKER_NETWORK  \
 -e RABBITMQ_HOSTNAME=${RABBITMQ_HOSTNAME} \
 -e RABBITMQ_PORT=${RABBITMQ_PORT} \
 -e RABBITMQ_VHOST=${RABBITMQ_VHOST} \
+-e API_SERVICE_URL=${API_SERVICE_URL} \
 marceloagmelo/go-message-receive
 
 # Listando os containers

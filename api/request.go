@@ -14,6 +14,7 @@ import (
 
 // GetRequest recuperar a requisição
 func GetRequest(endpoint string) (*http.Response, error) {
+
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}

@@ -19,5 +19,5 @@ export RABBITMQ_VHOST="/"
 export DOCKER_NETWORK="message-net"
 export DOCKER_REGISTRY="marceloagmelo"
 
-export API_SERVICE_URL="http://go-message-api:8181"
+export API_SERVICE_URL="http://go-message-api:8080"
 
