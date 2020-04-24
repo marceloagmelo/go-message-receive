@@ -21,3 +21,7 @@ export DOCKER_REGISTRY="marceloagmelo"
 
 export API_SERVICE_URL="http://go-message-api:8080"
 
+export APP_NAME="go-message-receive"
+export APP_NAME_API="go-message-api"
+
+

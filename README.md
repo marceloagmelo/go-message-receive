@@ -18,12 +18,12 @@ cd go-message-receive
 ## Build da Aplicação
 
 ```
-./go-message-receive-image-build.sh
+./image-build.sh
 ```
 
 ## Iniciar as Aplicações de Dependências
 ```
-./go-message-send-dependecy.sh
+./dependecy-start.sh
 ```
 
 ## Preparar o MySQL
@@ -41,22 +41,22 @@ status INTEGER,
 PRIMARY KEY (id)
 );
 
-## Iniciar a Aplicação Message Receive
+## Iniciar a Aplicação
 ```
-./go-message-receive-start.sh
+./start.sh
 ```
 ```
 http://localhost:8282/health
 ```
 
-## Finalizar a Aplicação Message Send
+## Finalizar a Aplicação
 ```
-./go-message-receive-stop.sh
+./stop.sh
 ```
 
 ## Finalizar a Todas as Aplicações
 ```
-./go-message-receive-stop-all.sh
+./stop-all.sh
 ```
 
 # Fucionalidades
@@ -64,4 +64,4 @@ Lista das funcionalidas:
 
 ### Ler e Gravar Mensagem
 - Passo 01: A aplicação recebe a mensagem do RabbitMQ
-- Passo 01: A aplicação atualiza o banco de dados com o status de 2 (Mensagem Recebida)
+- Passo 02: A aplicação atualiza o banco de dados com o status de 2 (Mensagem Recebida)
