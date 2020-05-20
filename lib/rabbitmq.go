@@ -1,11 +1,14 @@
 package lib
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/marceloagmelo/go-message-receive/api"
+	"github.com/marceloagmelo/go-message-receive/models"
 
 	"github.com/marceloagmelo/go-message-receive/logger"
 	"github.com/marceloagmelo/go-message-receive/utils"
@@ -62,8 +65,13 @@ func LerMensagensRabbitMQ(conn *amqp.Connection) {
 
 	go func() {
 		for d := range msgs {
-			strID := utils.BytesToString(d.Body)
-			mensagemRecuperada, err := api.RecuperarMensagem(strID)
+			var mensagem models.Mensagem
+			err = json.Unmarshal(d.Body, &mensagem)
+			if err != nil {
+				mensagemErro := fmt.Sprintf("%s: %s", "Erro ao ler a mensagem com o JSON informado", err.Error())
+				logger.Erro.Println(mensagemErro)
+			}
+			mensagemRecuperada, err := api.RecuperarMensagem(strconv.Itoa(mensagem.ID))
 			if err == nil {
 				mensagemRecuperada.Status = 2
 				novaMensagem, err := api.AtualizarMensagem(mensagemRecuperada)
