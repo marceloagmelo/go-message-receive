@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/marceloagmelo/go-message-receive/logger"
-	"github.com/marceloagmelo/go-message-receive/models"
+	"github.com/marceloagmelo/go-message-receive/model"
 )
 
 // GetRequest recuperar a requisição
@@ -42,7 +42,7 @@ func GetRequest(endpoint string) (*http.Response, error) {
 }
 
 // PostRequest envio de uma requisição
-func PostRequest(endpoint string, mensagem models.Mensagem) (*http.Response, error) {
+func PostRequest(endpoint string, mensagem model.Mensagem) (*http.Response, error) {
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
@@ -77,7 +77,7 @@ func PostRequest(endpoint string, mensagem models.Mensagem) (*http.Response, err
 }
 
 // PutRequest envio de uma requisição
-func PutRequest(endpoint string, mensagem models.Mensagem) (*http.Response, error) {
+func PutRequest(endpoint string, mensagem model.Mensagem) (*http.Response, error) {
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}

@@ -7,14 +7,14 @@ import (
 	"net/http"
 
 	"github.com/marceloagmelo/go-message-receive/logger"
-	"github.com/marceloagmelo/go-message-receive/models"
+	"github.com/marceloagmelo/go-message-receive/model"
 	"github.com/marceloagmelo/go-message-receive/variaveis"
 )
 
 var api = "go-message/api/v1"
 
 //RecuperarMensagem enviar a mensagem
-func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) {
+func RecuperarMensagem(id string) (mensagemRetorno model.Mensagem, erro error) {
 	endpoint := variaveis.ApiURL + "/" + api + "/mensagem/" + id
 
 	resposta, err := GetRequest(endpoint)
@@ -29,7 +29,7 @@ func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) 
 			logger.Erro.Println(mensagem)
 			return mensagemRetorno, err
 		}
-		mensagemRetorno = models.Mensagem{}
+		mensagemRetorno = model.Mensagem{}
 		err = json.Unmarshal(corpo, &mensagemRetorno)
 		if err != nil {
 			mensagem := fmt.Sprintf("%s: %s", "Erro ao converter o retorno JSON", err.Error())
@@ -41,7 +41,7 @@ func RecuperarMensagem(id string) (mensagemRetorno models.Mensagem, erro error) 
 }
 
 //AtualizarMensagem enviar a mensagem
-func AtualizarMensagem(novaMensagem models.Mensagem) (mensagemRetorno models.Mensagem, erro error) {
+func AtualizarMensagem(novaMensagem model.Mensagem) (mensagemRetorno model.Mensagem, erro error) {
 	endpoint := variaveis.ApiURL + "/" + api + "/mensagem/atualizar"
 
 	resposta, err := PutRequest(endpoint, novaMensagem)
@@ -56,7 +56,7 @@ func AtualizarMensagem(novaMensagem models.Mensagem) (mensagemRetorno models.Men
 			logger.Erro.Println(mensagem)
 			return mensagemRetorno, err
 		}
-		mensagemRetorno = models.Mensagem{}
+		mensagemRetorno = model.Mensagem{}
 		err = json.Unmarshal(corpo, &mensagemRetorno)
 		if err != nil {
 			mensagem := fmt.Sprintf("%s: %s", "Erro ao converter o retorno JSON", err.Error())

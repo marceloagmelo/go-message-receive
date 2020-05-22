@@ -8,10 +8,10 @@ import (
 	"strconv"
 
 	"github.com/marceloagmelo/go-message-receive/api"
-	"github.com/marceloagmelo/go-message-receive/models"
+	"github.com/marceloagmelo/go-message-receive/model"
 
 	"github.com/marceloagmelo/go-message-receive/logger"
-	"github.com/marceloagmelo/go-message-receive/utils"
+	"github.com/marceloagmelo/go-message-receive/util"
 	"github.com/streadway/amqp"
 )
 
@@ -24,7 +24,7 @@ func ConectarRabbitMQ() (*amqp.Connection, error) {
 	// Conectar com o rabbitmq
 	var connectionString = fmt.Sprintf("amqp://%s:%s@%s:%s%s", os.Getenv("RABBITMQ_USER"), os.Getenv("RABBITMQ_PASS"), os.Getenv("RABBITMQ_HOSTNAME"), os.Getenv("RABBITMQ_PORT"), os.Getenv("RABBITMQ_VHOST"))
 	conn, err := amqp.Dial(connectionString)
-	utils.CheckErrFatal(err, "Conectando com o rabbitmq")
+	util.CheckErrFatal(err, "Conectando com o rabbitmq")
 
 	return conn, nil
 }
@@ -33,7 +33,7 @@ func ConectarRabbitMQ() (*amqp.Connection, error) {
 func LerMensagensRabbitMQ(conn *amqp.Connection) {
 	// Abrir o canal
 	ch, err := conn.Channel()
-	utils.CheckErrFatal(err, "Falha ao abrir o canal no rabbitmq")
+	util.CheckErrFatal(err, "Falha ao abrir o canal no rabbitmq")
 	defer ch.Close()
 
 	// Declarara fila
@@ -45,7 +45,7 @@ func LerMensagensRabbitMQ(conn *amqp.Connection) {
 		false, // no-wait
 		nil,   // arguments
 	)
-	utils.CheckErrFatal(err, "Falha ao declarar a fila no rabbitmq")
+	util.CheckErrFatal(err, "Falha ao declarar a fila no rabbitmq")
 
 	// Ler mensagens
 	msgs, err := ch.Consume(
@@ -57,15 +57,15 @@ func LerMensagensRabbitMQ(conn *amqp.Connection) {
 		false,  // no-wait
 		nil,    // args
 	)
-	utils.CheckErrFatal(err, "Falha ao ler as mensagens no rabbitmq")
+	util.CheckErrFatal(err, "Falha ao ler as mensagens no rabbitmq")
 
-	utils.CheckErrFatal(err, "Falha ao ler as mensagens no rabbitmq")
+	util.CheckErrFatal(err, "Falha ao ler as mensagens no rabbitmq")
 
 	forever := make(chan bool)
 
 	go func() {
 		for d := range msgs {
-			var mensagem models.Mensagem
+			var mensagem model.Mensagem
 			err = json.Unmarshal(d.Body, &mensagem)
 			if err != nil {
 				mensagemErro := fmt.Sprintf("%s: %s", "Erro ao ler a mensagem com o JSON informado", err.Error())
